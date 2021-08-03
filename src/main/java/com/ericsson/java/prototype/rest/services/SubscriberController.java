@@ -18,28 +18,26 @@ import com.ericsson.java.prototype.services.SubscriberService;
 
 @RestController
 public class SubscriberController {
-	
+
 	@Autowired
-    SubscriberService subservice;
-	
-	
-	  @GetMapping("/subscriber") 
-	  public List<Subscriber> getAllSubscribers() {
-		  return subservice.getAllSubscribers(); 
-	  }
-	 
-	
+	SubscriberService subservice;
+
+	@GetMapping("/subscriber")
+	public List<Subscriber> getAllSubscribers() {
+		return subservice.getAllSubscribers();
+	}
+
 	@GetMapping("/subscriber/{id}")
 	public Subscriber getSubscriber(@PathVariable String id) {
 		return subservice.getSubscriberById(id);
 	}
-	
+
 	@PostMapping("/subscriber")
 	public ResponseEntity<?> createSubscriber(@RequestBody Subscriber sub) {
 		subservice.createSubscriber(sub);
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/subscriber")
 	public ResponseEntity<?> updateSubscriber(@RequestBody Subscriber sub) {
 		subservice.updateSubscriber(sub);
@@ -49,12 +47,11 @@ public class SubscriberController {
 	@DeleteMapping("/subscriber")
 	public ResponseEntity<?> deleteSubscriber(@RequestBody Subscriber sub) {
 
-		if(sub.getId() != "") {
+		if (sub.getId() != "") {
 			subservice.deleteSubscriber(sub);
 			return ResponseEntity.ok(HttpStatus.OK);
-		}
-		else
+		} else
 			return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
 	}
-	
+
 }

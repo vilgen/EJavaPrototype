@@ -27,7 +27,7 @@ public class ScheduledTasks {
 	@Scheduled(fixedRate = 2000)
     public void scheduleTaskWithFixedRate() {
 		
-		logger.info("Fixed Rate Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
+		//logger.info("Fixed Rate Task :: Execution Time - {}", dateTimeFormatter.format(LocalDateTime.now()) );
 		
 		List<Subscriber> subs = new ArrayList<>();
 		
