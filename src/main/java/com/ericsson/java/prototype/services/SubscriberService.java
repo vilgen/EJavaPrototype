@@ -23,9 +23,9 @@ public class SubscriberService {
 		Subscriber sb = new Subscriber();
 
 		for (Subscriber sub : this.subList) {
-			if (sub.getId().equals(id)) {
+			if (sub.getId().equals(id))
 				sb = sub;
-			}
+
 		}
 
 		return sb;
@@ -37,34 +37,58 @@ public class SubscriberService {
 	}
 
 	@CachePut
-	public void createSubscriber(Subscriber sub) {
+	public void createSubscriber(Subscriber sub) throws Exception {
 		this.subList.add(sub);
+
 	}
 
 	@CachePut
-	public void updateSubscriber(Subscriber sub) {
-		// System.out.println("Subscriber updated: \n" + sub.toString());
-		
+	public ServiceResponse updateSubscriber(Subscriber sub) throws Exception {
+
+		ServiceResponse sr = new ServiceResponse();
+
 		for (Subscriber sb : this.subList) {
-			
+
 			if (sb.getId().equals(sub.getId())) {
-				
+
 				int index = this.subList.indexOf(sb);
 				this.subList.set(index, sub);
+
+				sr.setRespId(200);
+				sr.setRespMessage("Success");
+			}
+
+			else {
+
+				sr.setRespId(404);
+				sr.setRespMessage("Subscriber Not Found!");
 			}
 		}
+
+		return sr;
 	}
 
 	@CachePut
-	public void deleteSubscriber(Subscriber sub) {
-		//System.out.println("Subscriber deleted: \n" + sub.toString());
+	public ServiceResponse deleteSubscriber(Subscriber sub) throws Exception {
+
+		ServiceResponse sr = new ServiceResponse();
 		for (Iterator<Subscriber> iterator = subList.iterator(); iterator.hasNext();) {
-			
+
 			if (iterator.next().getId().equals(sub.getId())) {
-				
+
 				iterator.remove();
+
+				sr.setRespId(200);
+				sr.setRespMessage("Success");
+			}
+
+			else {
+				sr.setRespId(404);
+				sr.setRespMessage("Subscriber Not Found!");
 			}
 		}
-		
+
+		return sr;
+
 	}
 }

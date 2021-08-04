@@ -21,8 +21,8 @@ public class ScheduledTasks {
 	@Autowired
     SubscriberService subservice;
 	
-    private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+//    private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
+//    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm:ss");
 	
 	@Scheduled(fixedRate = 2000)
     public void scheduleTaskWithFixedRate() {
@@ -35,7 +35,7 @@ public class ScheduledTasks {
 		
 		for(Subscriber s : subs) {
 			
-			System.out.println(s.getName());
+			//System.out.println(s.getName());
 		}
     }
 

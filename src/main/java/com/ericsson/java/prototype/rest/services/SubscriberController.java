@@ -2,6 +2,8 @@ package com.ericsson.java.prototype.rest.services;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ericsson.java.prototype.model.Subscriber;
+import com.ericsson.java.prototype.services.ServiceResponse;
 import com.ericsson.java.prototype.services.SubscriberService;
 
 @RestController
 public class SubscriberController {
-
+	
+    private static final Logger log = LoggerFactory.getLogger(SubscriberService.class);
+	
 	@Autowired
 	SubscriberService subservice;
 
@@ -34,24 +39,65 @@ public class SubscriberController {
 
 	@PostMapping("/subscriber")
 	public ResponseEntity<?> createSubscriber(@RequestBody Subscriber sub) {
-		subservice.createSubscriber(sub);
-		return ResponseEntity.ok(HttpStatus.OK);
+		
+		if(sub.getId().equals(null) || sub.getId().equals(""))
+			return ResponseEntity.ok("Subscriber Id cannot be NULL!");
+		
+		try {
+			
+			subservice.createSubscriber(sub);
+			log.info("/subscriber[POST]" + sub.toString());
+			
+			return ResponseEntity.ok(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@PutMapping("/subscriber")
 	public ResponseEntity<?> updateSubscriber(@RequestBody Subscriber sub) {
-		subservice.updateSubscriber(sub);
-		return ResponseEntity.ok(HttpStatus.OK);
+		
+		if(sub.getId().equals(null) || sub.getId().equals(""))
+			return ResponseEntity.ok("Subscriber Id cannot be NULL!");
+		
+		try {
+			ServiceResponse resp = new ServiceResponse();
+			resp = subservice.updateSubscriber(sub);
+			
+			if(resp.getRespId() == 404)
+				return ResponseEntity.ok(resp.getRespMessage());
+			
+			log.info("/subscriber[PUT]" + sub.toString());
+			return ResponseEntity.ok(HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@DeleteMapping("/subscriber")
 	public ResponseEntity<?> deleteSubscriber(@RequestBody Subscriber sub) {
 
-		if (sub.getId() != "") {
-			subservice.deleteSubscriber(sub);
+		if(sub.getId().equals(null) || sub.getId().equals(""))
+			return ResponseEntity.ok("Subscriber Id cannot be NULL!");
+		
+		try {
+			ServiceResponse resp = new ServiceResponse();
+			resp = subservice.deleteSubscriber(sub);
+			
+			if(resp.getRespId() == 404)
+				return ResponseEntity.ok(resp.getRespMessage());
+			
+			log.info("/subscriber[DELETE] [id=" + sub.getId().toString() + "]");
 			return ResponseEntity.ok(HttpStatus.OK);
-		} else
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }

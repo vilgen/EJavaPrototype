@@ -3,6 +3,8 @@ package com.ericsson.java.prototype.soap.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -14,6 +16,9 @@ import com.ericsson.java.prototype.services.SubscriberService;
 
 @Endpoint
 public class SubscribersEndpoint {
+	
+    private static final Logger log = LoggerFactory.getLogger(SubscribersEndpoint.class);
+
 
 	@Autowired
 	SubscriberService subservice;
@@ -38,6 +43,8 @@ public class SubscribersEndpoint {
 		}
 
 		response.getSubscribers().addAll(subscribersList); // add subscribers to the response list
+				
+		log.info("/getAllSubscribers");
 
 		return response;
 	}
@@ -59,6 +66,8 @@ public class SubscribersEndpoint {
 		subscribersList.add(subscribers);
 
 		response.getSubscribers().addAll(subscribersList); // add subscribers to the response list
+		
+		log.info("/getSubscriberById " + "[id=" + subscribers.getId() + "]");
 
 		return response;
 	}
