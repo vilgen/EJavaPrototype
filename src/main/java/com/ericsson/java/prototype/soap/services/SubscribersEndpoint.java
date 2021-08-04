@@ -20,12 +20,12 @@ public class SubscribersEndpoint {
 
 	@PayloadRoot(namespace = "http://www.ericsson.com/java/prototype/soap/services", localPart = "getAllSubscribersRequest")
 	@ResponsePayload
-	public GetAllSubscribersResponse processCourseDetailsRequest(@RequestPayload GetAllSubscribersRequest request) {
+	public GetAllSubscribersResponse processAllSubscribersRequest(@RequestPayload GetAllSubscribersRequest request) {
 		GetAllSubscribersResponse response = new GetAllSubscribersResponse();
 
 		List<Subscriber> subList = new ArrayList<>(); // creation of a subscriber list from subscriber model
 		subList = subservice.getAllSubscribers(); // get all subscribers from subscriber service
-		
+
 		List<Subscribers> subscribersList = new ArrayList<Subscribers>(); // soap subscribers response list object
 
 		// fill soap subscribers response object from subscriber model
@@ -36,6 +36,27 @@ public class SubscribersEndpoint {
 			subscribers.setMsisdn(sub.getMsisdn());
 			subscribersList.add(subscribers);
 		}
+
+		response.getSubscribers().addAll(subscribersList); // add subscribers to the response list
+
+		return response;
+	}
+
+	@PayloadRoot(namespace = "http://www.ericsson.com/java/prototype/soap/services", localPart = "getSubscriberByIdRequest")
+	@ResponsePayload
+	public GetSubscriberByIdResponse processSubscriberByIdRequest(@RequestPayload GetSubscriberByIdRequest request) {
+		GetSubscriberByIdResponse response = new GetSubscriberByIdResponse();
+
+		Subscriber sub = new Subscriber(); // creation of a subscriber object from subscriber model
+		sub = subservice.getSubscriberById(request.getId()); // get subscriber from subscriber service
+
+		List<Subscribers> subscribersList = new ArrayList<Subscribers>(); // soap subscribers response list object
+
+		Subscribers subscribers = new Subscribers(); // soap subscribers object
+		subscribers.setId(sub.getId());
+		subscribers.setName(sub.getName());
+		subscribers.setMsisdn(sub.getMsisdn());
+		subscribersList.add(subscribers);
 
 		response.getSubscribers().addAll(subscribersList); // add subscribers to the response list
 

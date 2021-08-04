@@ -39,8 +39,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "subscribers"
 })
-@XmlRootElement(name = "getAllSubscribersResponse")
-public class GetAllSubscribersResponse {
+@XmlRootElement(name = "getSubscriberByIdResponse")
+public class GetSubscriberByIdResponse {
 
     protected List<Subscribers> subscribers;
 
