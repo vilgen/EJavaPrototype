@@ -4,6 +4,8 @@ This project is a backend project developed in Java by using Spring Boot framewo
 
 ## Project Architecture
 
+![](static/architecture.PNG)
+
 ## Prerequisities to Run Application
 
 ## Building Project
