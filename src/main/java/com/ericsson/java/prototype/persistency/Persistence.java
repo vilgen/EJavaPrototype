@@ -48,7 +48,7 @@ public class Persistence {
 
 		/* Write app.conf values to app.properties */
 		WriteFile fw = new WriteFile();
-		fw.writeAppConfDataToLocale(data_file_path, scheduler);
+		fw.writeAppConfDataToAppProperties(data_file_path, scheduler);
 
 		/* Read data_file_path from app.properties */
 		String app_prop_file_content = fr.readAppPropFile();
@@ -73,6 +73,23 @@ public class Persistence {
 		}
 
 		return subscribers;
+	}
+	
+	public void writeCacheDataToFile(List<Subscriber> subs) {
+		
+		String dataJson = Parser.parseDataJson(subs);
+		
+		ReadFile fr = new ReadFile();
+		
+		/* Read data_file_path from app.properties */
+		String app_prop_file_content = fr.readAppPropFile();
+
+		/* Get data.json path from app.properties */
+		String data_file_path = Parser.parseDataFilePathApp(app_prop_file_content);
+		
+		WriteFile fw = new WriteFile();
+		fw.writeJsonDataToFile(data_file_path, dataJson);
+		
 	}
 
 }
