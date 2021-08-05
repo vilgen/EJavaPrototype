@@ -39,7 +39,6 @@ public class SubscriberService {
 	@CachePut
 	public void createSubscriber(Subscriber sub) throws Exception {
 		this.subList.add(sub);
-
 	}
 
 	@CachePut

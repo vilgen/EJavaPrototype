@@ -30,7 +30,7 @@ public class SubscribersEndpoint {
 
 		List<Subscriber> subList = new ArrayList<>(); // creation of a subscriber list from subscriber model
 		subList = subservice.getAllSubscribers(); // get all subscribers from subscriber service
-
+		
 		List<Subscribers> subscribersList = new ArrayList<Subscribers>(); // soap subscribers response list object
 
 		// fill soap subscribers response object from subscriber model

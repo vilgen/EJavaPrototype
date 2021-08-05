@@ -22,7 +22,7 @@ import com.ericsson.java.prototype.services.SubscriberService;
 @RestController
 public class SubscriberController {
 	
-    private static final Logger log = LoggerFactory.getLogger(SubscriberService.class);
+    private static final Logger log = LoggerFactory.getLogger(SubscriberController.class);
 	
 	@Autowired
 	SubscriberService subservice;
@@ -52,7 +52,7 @@ public class SubscriberController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.ok(e.getMessage().toString());
 		}
 	}
 
@@ -74,7 +74,7 @@ public class SubscriberController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.ok(e.getMessage().toString());
 		}
 	}
 
@@ -96,7 +96,7 @@ public class SubscriberController {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResponseEntity.ok(HttpStatus.BAD_REQUEST);
+			return ResponseEntity.ok(e.getMessage().toString());
 		}
 	}
 
