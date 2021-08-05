@@ -10,11 +10,11 @@ This project is a backend project developed in Java by using Spring Boot framewo
 ### Project Architecture
 The project architecture consists of the following modules as shown in the figure.
 
-* ***Persistence Layer:*** handles data file read/write operations
-* ***In memory cache:*** keeps operation data at runtime
+* ***Persistence Layer:*** Handles data file read/write operations
+* ***In memory cache:*** Saves and orchestrate data operation during application runtime life cycle
 * ***Web Service:*** Contains REST API and SOAP WS endpoints to act as client interfaces
-* ***Scheduler:*** Operates based on provided schedule to sync cache data to data file
-* ***Log:*** Keeps web service request logging as info level
+* ***Scheduler:*** Operates based on provided cron expression to sync cache data to data file
+* ***Log:*** Logs all the requests coming to web service endpoints
 
 ![](src/main/resources/static/architecture.PNG)
 
@@ -57,7 +57,7 @@ $ mvn spring-boot:run
 ```
 
 ### Running Application from .jar file
-Once package building is completed a `runnable .jar` is exported to project's target folder. The application can also be up by running the exported .jar file with providing the `app.properties` file as a spring config file.
+Once package building is completed a `executable fat .jar` is exported to project's target folder. The application can also be up by running the fat .jar with providing the `app.properties` file as a spring config file argument. (To do that the app.properties file shall be moved to /target folder and the following command shall be run from the directory)
 
 ```sh
 $ java -jar -Dspring.config.file=app.properties ericsson-java-prototype-0.0.1-SNAPSHOT.jar
