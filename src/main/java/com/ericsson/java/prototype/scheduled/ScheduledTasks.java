@@ -13,7 +13,7 @@ import com.ericsson.java.prototype.persistency.Persistence;
 import com.ericsson.java.prototype.services.SubscriberService;
 
 @Component
-@PropertySource("classpath:app.properties")
+@PropertySource("file:app.properties")
 public class ScheduledTasks {
 	
 	@Autowired

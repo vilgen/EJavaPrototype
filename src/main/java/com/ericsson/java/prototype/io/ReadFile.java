@@ -1,9 +1,10 @@
 package com.ericsson.java.prototype.io;
 
 import java.io.*;
+import java.util.Properties;
 
 public class ReadFile {
-	
+
 	private String app_conf_content;
 
 	public String getApp_conf_content() {
@@ -40,19 +41,19 @@ public class ReadFile {
 
 	// read the data.json file from PC and return the content
 	public String readDataFile(String path) {
-				
+
 		File f = new File(path);
-		
-		/*create new data file if it is not there*/
-		if(!f.isFile()) {
-			
+
+		/* create new data file if it is not there */
+		if (!f.isFile()) {
+
 			try {
 				f.createNewFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		byte[] array = new byte[1024];
 		String dataJson = "";
 
@@ -76,32 +77,26 @@ public class ReadFile {
 		return dataJson;
 
 	}
-	
-//	Reads the app.conf file from project base-dir and return data_file_path 
-	public String readAppPropFile() {
 
-		File f = new File("src/main/resources/app.properties");
-		byte[] array = new byte[1024];
+//	Reads the app.conf file from project base-dir and return data_file_path 
+	public String readDataFilePathAppPropFile() {
+
 		String value = "";
 
+		Properties prop = new Properties();
+		String propFileName = "app.properties";
+
 		try {
-			FileInputStream file = new FileInputStream(f);
-			BufferedInputStream bf = new BufferedInputStream(file);
+			InputStream inputStream = new FileInputStream(propFileName); // getClass().getClassLoader().getResourceAsStream(propFileName);
 
-			int read = 0;
+			prop.load(inputStream);
 
-			while ((read = bf.read(array)) != -1) {
-				String data = new String(array, 0, read);
-				value = data;
-			}
+			value = prop.getProperty("data.file.path");
 
-			bf.close();
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return value;
-
 	}
 }

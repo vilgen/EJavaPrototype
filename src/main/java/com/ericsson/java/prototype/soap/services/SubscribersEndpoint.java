@@ -16,9 +16,8 @@ import com.ericsson.java.prototype.services.SubscriberService;
 
 @Endpoint
 public class SubscribersEndpoint {
-	
-    private static final Logger log = LoggerFactory.getLogger(SubscribersEndpoint.class);
 
+	private static final Logger log = LoggerFactory.getLogger(SubscribersEndpoint.class);
 
 	@Autowired
 	SubscriberService subservice;
@@ -30,7 +29,7 @@ public class SubscribersEndpoint {
 
 		List<Subscriber> subList = new ArrayList<>(); // creation of a subscriber list from subscriber model
 		subList = subservice.getAllSubscribers(); // get all subscribers from subscriber service
-		
+
 		List<Subscribers> subscribersList = new ArrayList<Subscribers>(); // soap subscribers response list object
 
 		// fill soap subscribers response object from subscriber model
@@ -43,7 +42,7 @@ public class SubscribersEndpoint {
 		}
 
 		response.getSubscribers().addAll(subscribersList); // add subscribers to the response list
-				
+
 		log.info("/getAllSubscribers");
 
 		return response;
@@ -54,20 +53,23 @@ public class SubscribersEndpoint {
 	public GetSubscriberByIdResponse processSubscriberByIdRequest(@RequestPayload GetSubscriberByIdRequest request) {
 		GetSubscriberByIdResponse response = new GetSubscriberByIdResponse();
 
-		Subscriber sub = new Subscriber(); // creation of a subscriber object from subscriber model
-		sub = subservice.getSubscriberById(request.getId()); // get subscriber from subscriber service
+		List<Subscriber> subList = new ArrayList<>(); // creation of a subscriber object from subscriber model
+		subList = subservice.getSubscriberById(request.getId()); // get subscriber from subscriber service
 
 		List<Subscribers> subscribersList = new ArrayList<Subscribers>(); // soap subscribers response list object
 
-		Subscribers subscribers = new Subscribers(); // soap subscribers object
-		subscribers.setId(sub.getId());
-		subscribers.setName(sub.getName());
-		subscribers.setMsisdn(sub.getMsisdn());
-		subscribersList.add(subscribers);
+		// fill soap subscribers response object from subscriber model
+		for (Subscriber sub : subList) {
+			Subscribers subscribers = new Subscribers(); // soap subscribers object
+			subscribers.setId(sub.getId());
+			subscribers.setName(sub.getName());
+			subscribers.setMsisdn(sub.getMsisdn());
+			subscribersList.add(subscribers);
+		}
 
 		response.getSubscribers().addAll(subscribersList); // add subscribers to the response list
-		
-		log.info("/getSubscriberById " + "[id=" + subscribers.getId() + "]");
+
+		log.info("/getSubscriberById " + "[id=" + request.getId() + "]");
 
 		return response;
 	}

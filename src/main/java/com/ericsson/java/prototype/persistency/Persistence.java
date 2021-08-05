@@ -51,10 +51,7 @@ public class Persistence {
 		fw.writeAppConfDataToAppProperties(data_file_path, scheduler);
 
 		/* Read data_file_path from app.properties */
-		String app_prop_file_content = fr.readAppPropFile();
-
-		/* Get data.json path from app.properties */
-		String new_data_file_path = Parser.parseDataFilePathApp(app_prop_file_content);
+		String new_data_file_path = fr.readDataFilePathAppPropFile();
 
 		/* Read data.json content and return it */
 		String jsonStr = fr.readDataFile(new_data_file_path);
@@ -74,22 +71,19 @@ public class Persistence {
 
 		return subscribers;
 	}
-	
+
 	public void writeCacheDataToFile(List<Subscriber> subs) {
-		
+
 		String dataJson = Parser.parseDataJson(subs);
-		
+
 		ReadFile fr = new ReadFile();
-		
-		/* Read data_file_path from app.properties */
-		String app_prop_file_content = fr.readAppPropFile();
 
 		/* Get data.json path from app.properties */
-		String data_file_path = Parser.parseDataFilePathApp(app_prop_file_content);
-		
+		String data_file_path = fr.readDataFilePathAppPropFile();
+
 		WriteFile fw = new WriteFile();
 		fw.writeJsonDataToFile(data_file_path, dataJson);
-		
+
 	}
 
 }

@@ -18,17 +18,17 @@ public class SubscriberService {
 	private List<Subscriber> subList = new ArrayList<>();
 
 	@Cacheable
-	public Subscriber getSubscriberById(String id) {
+	public List<Subscriber> getSubscriberById(String id) {
 
-		Subscriber sb = new Subscriber();
+		List<Subscriber> sList = new ArrayList<>();
 
 		for (Subscriber sub : this.subList) {
 			if (sub.getId().equals(id))
-				sb = sub;
+				sList.add(sub);
 
 		}
 
-		return sb;
+		return sList;
 	}
 
 	@Cacheable
@@ -53,7 +53,6 @@ public class SubscriberService {
 				int index = this.subList.indexOf(sb);
 				this.subList.set(index, sub);
 
-				sr.setRespId(200);
 				sr.setRespMessage("Success");
 			}
 

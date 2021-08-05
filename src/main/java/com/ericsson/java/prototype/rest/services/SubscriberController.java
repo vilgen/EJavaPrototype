@@ -21,35 +21,35 @@ import com.ericsson.java.prototype.services.SubscriberService;
 
 @RestController
 public class SubscriberController {
-	
-    private static final Logger log = LoggerFactory.getLogger(SubscriberController.class);
-	
+
+	private static final Logger log = LoggerFactory.getLogger(SubscriberController.class);
+
 	@Autowired
 	SubscriberService subservice;
 
-	@GetMapping("/subscriber")
-	public List<Subscriber> getAllSubscribers() {
-		return subservice.getAllSubscribers();
-	}
+//	@GetMapping("/subscriber")
+//	public List<Subscriber> getAllSubscribers() {
+//		return subservice.getAllSubscribers();
+//	}
 
-	@GetMapping("/subscriber/{id}")
-	public Subscriber getSubscriber(@PathVariable String id) {
-		return subservice.getSubscriberById(id);
-	}
+//	@GetMapping("/subscriber/{id}")
+//	public Subscriber getSubscriber(@PathVariable String id) {
+//		return subservice.getSubscriberById(id);
+//	}
 
 	@PostMapping("/subscriber")
 	public ResponseEntity<?> createSubscriber(@RequestBody Subscriber sub) {
-		
-		if(sub.getId().equals(null) || sub.getId().equals(""))
+
+		if (sub.getId().equals(null) || sub.getId().equals(""))
 			return ResponseEntity.ok("Subscriber Id cannot be NULL!");
-		
+
 		try {
-			
+
 			subservice.createSubscriber(sub);
 			log.info("/subscriber[POST]" + sub.toString());
-			
+
 			return ResponseEntity.ok(HttpStatus.OK);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.ok(e.getMessage().toString());
@@ -58,20 +58,20 @@ public class SubscriberController {
 
 	@PutMapping("/subscriber")
 	public ResponseEntity<?> updateSubscriber(@RequestBody Subscriber sub) {
-		
-		if(sub.getId().equals(null) || sub.getId().equals(""))
+
+		if (sub.getId().equals(null) || sub.getId().equals(""))
 			return ResponseEntity.ok("Subscriber Id cannot be NULL!");
-		
+
 		try {
 			ServiceResponse resp = new ServiceResponse();
 			resp = subservice.updateSubscriber(sub);
-			
-			if(resp.getRespId() == 404)
+
+			if (resp.getRespId() == 404)
 				return ResponseEntity.ok(resp.getRespMessage());
-			
+
 			log.info("/subscriber[PUT]" + sub.toString());
 			return ResponseEntity.ok(HttpStatus.OK);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.ok(e.getMessage().toString());
@@ -81,19 +81,19 @@ public class SubscriberController {
 	@DeleteMapping("/subscriber")
 	public ResponseEntity<?> deleteSubscriber(@RequestBody Subscriber sub) {
 
-		if(sub.getId().equals(null) || sub.getId().equals(""))
+		if (sub.getId().equals(null) || sub.getId().equals(""))
 			return ResponseEntity.ok("Subscriber Id cannot be NULL!");
-		
+
 		try {
 			ServiceResponse resp = new ServiceResponse();
 			resp = subservice.deleteSubscriber(sub);
-			
-			if(resp.getRespId() == 404)
+
+			if (resp.getRespId() == 404)
 				return ResponseEntity.ok(resp.getRespMessage());
-			
+
 			log.info("/subscriber[DELETE] [id=" + sub.getId().toString() + "]");
 			return ResponseEntity.ok(HttpStatus.OK);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.ok(e.getMessage().toString());
