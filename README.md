@@ -57,10 +57,10 @@ $ mvn spring-boot:run
 ```
 
 ### Running Application from .jar file
-Once package building is completed a `runnable .jar` is exported to project's target folder. The application can also be up by running the exported .jar file.
+Once package building is completed a `runnable .jar` is exported to project's target folder. The application can also be up by running the exported .jar file with providing the `app.properties` file as a spring config file.
 
 ```sh
-$ java -jar ericsson-java-prototype-0.0.1-SNAPSHOT.jar
+$ java -jar -Dspring.config.file=app.properties ericsson-java-prototype-0.0.1-SNAPSHOT.jar
 ```
 
 ### Web service endpoints
